@@ -1,12 +1,21 @@
 const express = require("express");
 const router = express.Router();
+const { generateFile } = require("../services/generateFileCppService");
 
-router.post("/", (req, res) => {
-  const { language, code } = req.body;
+router.post("/", async (req, res) => {
+  const { language = "cpp", code } = req.body;
+
+  if (code === undefined) {
+    res.status(400).json({
+      success: false,
+      message: "no code to compile",
+    });
+  }
+
+  const filepath = await generateFile(language, code);
 
   res.json({
-    language: language,
-    code: code,
+    filepath,
   });
 });
 
