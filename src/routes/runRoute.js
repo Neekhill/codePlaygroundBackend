@@ -12,12 +12,16 @@ router.post("/", async (req, res) => {
     });
   }
 
-  const filepath = await generateFileCpp(language, code);
-  const output = await executeFileCpp(filepath);
-  res.json({
-    filepath,
-    output,
-  });
+  try {
+    const filepath = await generateFileCpp(language, code);
+    const output = await executeFileCpp(filepath);
+    res.json({
+      filepath,
+      output,
+    });
+  } catch (err) {
+    res.status(500).json({ err });
+  }
 });
 
 module.exports = router;
