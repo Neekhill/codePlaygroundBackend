@@ -3,6 +3,7 @@ const router = express.Router();
 const { generateFile } = require("../services/generateFileService");
 const { executeFileCpp } = require("../services/executeFileCppService");
 const { executeFilePython } = require("../services/executeFilePythonService");
+const { executeFileJs } = require("../services/executeFileJsService");
 
 router.post("/", async (req, res) => {
   const { language = "cpp", code } = req.body;
@@ -22,6 +23,9 @@ router.post("/", async (req, res) => {
     }
     if (language === "py") {
       output = await executeFilePython(filepath);
+    }
+    if (language === "js") {
+      output = await executeFileJs(filepath);
     }
 
     res.json({
