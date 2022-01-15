@@ -1,7 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const { generateFileCpp } = require("../services/generateFileCppService");
+const { generateFile } = require("../services/generateFileService");
 const { executeFileCpp } = require("../services/executeFileCppService");
+const { executeFilePython } = require("../services/executeFilePythonService");
+
 router.post("/", async (req, res) => {
   const { language = "cpp", code } = req.body;
 
@@ -13,8 +15,15 @@ router.post("/", async (req, res) => {
   }
 
   try {
-    const filepath = await generateFileCpp(language, code);
-    const output = await executeFileCpp(filepath);
+    let output;
+    const filepath = await generateFile(language, code);
+    if (language === "cpp") {
+      output = await executeFileCpp(filepath);
+    }
+    if (language === "py") {
+      output = await executeFilePython(filepath);
+    }
+
     res.json({
       filepath,
       output,

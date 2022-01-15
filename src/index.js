@@ -1,7 +1,10 @@
 const express = require("express");
 const app = express();
+const cors = require("cors");
+
 const RunRoute = require("./routes/runRoute");
 
+app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use("/run", RunRoute);
