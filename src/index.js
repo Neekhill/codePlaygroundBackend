@@ -4,11 +4,14 @@ const Db = require("./database/db");
 const cors = require("cors");
 
 const RunRoute = require("./routes/runRoute");
+const StatusRoute = require("./routes/statusRoute");
 
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
 app.use("/run", RunRoute);
+app.use("/status", StatusRoute);
 
 app.get("/", (req, res) => {
   res.json({
