@@ -15,7 +15,9 @@ router.get("/", async (req, res) => {
       return res.status(400).json({ success: false, error: "invalid job id" });
     }
     res.status(200).json(job);
-  } catch (err) {}
+  } catch (err) {
+    return res.status(400).json({ success: false, error: JSON.stringify(err) });
+  }
 });
 
 module.exports = router;
