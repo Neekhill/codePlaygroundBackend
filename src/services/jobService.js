@@ -5,9 +5,24 @@ function createJob({ language, filepath }) {
     language,
     filepath,
   });
-  return job;
+  return job.save();
+}
+
+function updateJob({ jobId, startedAt, completedAt, status, output1 }) {
+  const updatedJob = Jobs.findOneAndUpdate(
+    { _id: jobId },
+    {
+      startedAt,
+      completedAt,
+      status,
+      output: output1,
+    },
+    { new: true }
+  );
+  return updatedJob;
 }
 
 module.exports = {
   createJob,
+  updateJob,
 };
