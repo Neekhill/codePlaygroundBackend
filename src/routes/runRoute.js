@@ -16,18 +16,24 @@ router.post("/", async (req, res) => {
     });
   }
 
+  let job;
+  let jobId;
+  let startedAt;
+  let completedAt;
+  let status;
+  let output1;
   try {
     let output;
     // generating file
     const filepath = await generateFile(language, code);
 
     // creating job for every code we recieve so that we can execute it later
-    let job = await createJob({ language, filepath });
+    job = await createJob({ language, filepath });
     console.log(job);
-    const jobId = job["_id"];
+    jobId = job["_id"];
     res.status(201).json({ success: true, jobId });
 
-    const startedAt = Date.now();
+    startedAt = Date.now();
     if (language === "cpp") {
       output = await executeFileCpp(filepath);
     }
@@ -45,8 +51,12 @@ router.post("/", async (req, res) => {
     /* res.json({filepath,output, }); */
     console.log(job);
   } catch (err) {
+    completedAt = Date.now();
+    status = "error";
+    output1 = JSON.stringify(err);
+    job = await updateJob({ jobId, startedAt, completedAt, status, output1 });
     /*  res.status(500).json({ err }); */
-    console.log({ err });
+    console.log(job);
   }
 });
 
