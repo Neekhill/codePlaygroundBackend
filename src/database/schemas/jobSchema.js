@@ -7,7 +7,7 @@ const jobSchema = new Schema({
     required: true,
     enum: ["cpp", "py", "js"],
   },
-  filePath: {
+  filepath: {
     type: String,
     required: true,
   },
