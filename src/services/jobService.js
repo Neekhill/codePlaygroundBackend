@@ -22,7 +22,13 @@ function updateJob({ jobId, startedAt, completedAt, status, output1 }) {
   return updatedJob;
 }
 
+function searchJob(id) {
+  job = Jobs.findById(id);
+  return job;
+}
+
 module.exports = {
   createJob,
   updateJob,
+  searchJob,
 };
