@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const app = express();
 const Db = require("./database/db");
@@ -19,7 +20,7 @@ app.get("/", (req, res) => {
   });
 });
 
-app.listen(3030, async () => {
+app.listen(process.env.PORT || 3030, async () => {
   try {
     await Db.connect();
     console.log("Connetion Successful");
