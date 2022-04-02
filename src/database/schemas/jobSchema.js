@@ -11,6 +11,7 @@ const jobSchema = new Schema({
     type: String,
     required: true,
   },
+
   submittedAt: {
     type: Date,
     default: Date.now,
